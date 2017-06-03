@@ -4,6 +4,7 @@
   "description": "KeyVision Project - Programmable visual keyboard",
   "main": "keyboard.js",
   "dependencies": {
+    "express": "^4.15.3",
     "socket.io": "^2.0.2"
   },
   "devDependencies": {},
@@ -14,6 +15,6 @@
     "keyboard",
     "programmable"
   ],
-  "author": "Giancarlo Trevisan",
+  "author": "Giancarlo Trevisan <giancarlo@trevisan.it>",
   "license": "MIT"
 }
