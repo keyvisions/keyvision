@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Project KeyVision</title>
+    <link rel="stylesheet" href="./css/base.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io.connect("http://127.0.0.1:8080"),
+        KBL; // Keyboard Layout
+
+      socket.on("init", layout => {
+        KBL = JSON.parse(layout) || {};
+        KBL.state = {
+          ShiftLeft: false,
+          ShiftRight: false,
+          ControlLeft: false,
+          ControlRight: false,
+          AltLeft: false,
+          AltRight: false,
+          CapsLock: false,
+          NumLock: false,
+          ScrollLock: false,
+          pressedKeys: new Set()
+        };
+
+        renderKeyboard();
+
+        document.body.addEventListener("touchstart", touchstart);
+        document.body.addEventListener("touchend", touchend);
+        document.body.addEventListener("touchcancel", touchend);
+        window.addEventListener("resize", renderKeyboard);
+      });
+
+      function renderKeyboard() {
+        var kb = document.body,
+          size = Math.min(kb.offsetWidth / KBL.size.cols, kb.offsetHeight / KBL.size.rows),
+          padding = 0.05 * size;
+
+        // Set proportions
+        size -= 2 * padding;
+        var stylesheet = document.styleSheets[0];
+        stylesheet.cssRules[0].style.fontSize = `${Math.round(size / 4.5)}px`;
+        stylesheet.cssRules[1].style.width = `${size}px`;
+        stylesheet.cssRules[1].style.height = `${size}px`;
+
+        // Draw keyboard
+        kb.innerHTML = ""; // Clear keyboard
+
+        var x = Math.round(padding), y = Math.round(padding);
+        KBL.keys.forEach(key => {
+          x = (key.dx === null) ? Math.round(padding) : x + Math.round((size + 2 * padding) * (1 + key.dx || 1));
+          y += Math.round((size + 2 * padding) * (key.dy || 0));
+
+          var el = document.createElement("div");
+          if (key.code) el.id = key.code;
+          el.className = key.code ? "key" : "placeholder";
+          el.style.top = `${y}px`, el.style.left = `${x}px`;
+
+          el.style.width = `${Math.round((size + 2 * padding) * (key.dw || 1) - 2 * padding)}px`;
+          x += Math.round((size + 2 * padding) * ((key.dw || 1) - 1));
+
+          el.style.height = `${Math.round((size + 2 * padding) * (key.dh || 1) - 2 * padding)}px`;
+
+          for (var j = 0; j < key.labels.length && j < 4; ++j)
+            el.innerHTML += key.code ? `<div class="${key.labels[j].length === 1 ? "char " : ""}c${key.type || 1}${j}">${key.labels[j]}</div>` : key.labels[j];
+          kb.appendChild(el);
+        });
+
+        KBL.chars = document.querySelectorAll(".char");
+
+        ["ScrollLock", "NumLock", "CapsLock"].forEach(lock => {
+          if (document.getElementById(lock) && localStorage.getItem(lock) === "true") {
+            document.getElementById(lock).classList.add("selected");
+            KBL.state[lock] = true;
+          }
+        });
+      }
+      function getButton(el) {
+        while (!el.id) el = el.parentElement;
+        if (el.tagName === "BODY") return null;
+        return el;
+      }
+      function touchstart(event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        var btn = getButton(event.target);
+        if (btn && btn.id) {
+          if (["ScrollLock", "NumLock", "CapsLock"].indexOf(btn.id) !== -1) {
+            KBL.state[btn.id] = btn.classList.toggle("selected");
+            localStorage.setItem(btn.id, KBL.state[btn.id]);
+          } else {
+            KBL.state.pressedKeys.add(btn.id);
+            btn.classList.add("selected");
+            if (KBL.state.hasOwnProperty(btn.id)) KBL.state[btn.id] = true;
+          }
+        }
+
+        KBL.chars.forEach(char => char.innerHTML = (KBL.state["ShiftLeft"] || KBL.state["ShiftRight"] || KBL.state["CapsLock"]) ? char.innerHTML.toUpperCase() : char.innerHTML.toLowerCase());
+        socket.send(KBL.state);
+      }
+      function touchend(event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        var btn = getButton(event.target);
+        if (btn && ["ScrollLock", "NumLock", "CapsLock"].indexOf(btn.id) === -1) {
+          KBL.state.pressedKeys.delete(btn.id);
+          btn.classList.remove("selected");
+          if (KBL.state.hasOwnProperty(btn.id)) KBL.state[btn.id] = false;
+        }
+
+        KBL.chars.forEach(char => char.innerHTML = (KBL.state["ShiftLeft"] || KBL.state["ShiftRight"] || KBL.state["CapsLock"]) ? char.innerHTML.toUpperCase() : char.innerHTML.toLowerCase());
+        socket.send(KBL.state);
+      }
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

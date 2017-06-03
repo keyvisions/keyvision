@@ -1,0 +1,19 @@
+{
+  "name": "keyvision",
+  "version": "1.0.0",
+  "description": "KeyVision Project - Programmable visual keyboard",
+  "main": "keyboard.js",
+  "dependencies": {
+    "socket.io": "^2.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "keyboard",
+    "programmable"
+  ],
+  "author": "Giancarlo Trevisan",
+  "license": "MIT"
+}

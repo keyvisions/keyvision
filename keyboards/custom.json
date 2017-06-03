@@ -1,0 +1,20 @@
+{
+  "version": "1.0",
+  "language": "it",
+  "type": "Custom",
+  "size": { "rows": 3, "cols": 4 },
+  "keys": [
+    { "code": "Escape", "dx": null, "labels": ["Esc"] },
+    { "type": 2, "code": "Digit1", "labels": ["!","1"] },
+    { "type": 3, "code": "Numpad7", "labels": ["7","Home"] },
+    { "labels": ["<img src=\"./media/logo64x64.png\" alt=\"KeyVisions&trade; logo\" title=\"KeyVisions&trade; logo\">"] },
+    { "code": "CapsLock", "dx": null, "dy": 1, "labels": ["Bloc Maiusc"] },
+    { "type": 2, "code": "KeyQ", "labels": ["q"] },
+    { "type": 2, "code": "BracketLeft", "labels": ["é","è","[","{"] },
+    { "code": "Enter", "labels": ["&crarr;"] },
+    { "code": "ControlLeft", "dx": null, "dy": 1, "labels": ["Ctrl"] },
+    { "code": "MetaLeft", "labels": ["Meta"] },
+    { "type": 2, "code": "Space", "labels": [""] },
+    { "code": "ArrowLeft", "labels": ["&larr;"] }
+  ]
+}

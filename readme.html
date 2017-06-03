@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Read Me</title>
+    <script>
+      function log(txt, append) {
+        var el = document.getElementById("log");
+        if (el)
+          if (append) el.innerHTML += txt + "<br>"; else el.innerHTML = txt;
+      }
+    </script>
+  </head>
+  <body>
+    <div id="log"></div>
+    <h1>PVK emulator (Programmable Visual Keyboard)</h1>
+    <ol>
+      <li>Raspberry PI</li>
+      <li>1920x540 Display (0.5K) 113dpi</li>
+      <li>USB powered</li>
+      <li>Keys + layout</li>
+      <li>SVG layout</li>
+      <li>node.js + sockets: listen for layout, font, key set</li>
+      <li>Bluetooth</li>
+      <li>WiFi</li>
+      <li>Camera</li>
+      <li>Speakers</li>
+      <li>Microphone</li>
+    </ol>
+    <h2>Links</h2>
+    <a href="https://www.melopero.com/shop/kits-progetti/raspberry-pi-zero-w/" target="_blank">Raspberry PI Zero W</a><br>
+    <a href="https://cdn-learn.adafruit.com/downloads/pdf/turning-your-raspberry-pi-zero-into-a-usb-gadget.pdf" target="_blank">Turn PI into USB gadget</a><br>
+  </body>
+</html>
