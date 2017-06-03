@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="./css/base.css">
     <script src="/socket.io/socket.io.js"></script>
     <script>
-      var socket = io.connect("http://127.0.0.1:8080"),
+      var socket = io.connect(),
         KBL; // Keyboard Layout
 
       socket.on("init", layout => {
@@ -21,7 +21,7 @@
           CapsLock: false,
           NumLock: false,
           ScrollLock: false,
-          pressedKeys: new Set()
+          pressedKeys: []
         };
 
         renderKeyboard();
@@ -67,7 +67,7 @@
           kb.appendChild(el);
         });
 
-        KBL.chars = document.querySelectorAll(".char");
+        KBL.chars = document.querySelectorAll(".char"); // Used to handle character case
 
         ["ScrollLock", "NumLock", "CapsLock"].forEach(lock => {
           if (document.getElementById(lock) && localStorage.getItem(lock) === "true") {
@@ -77,7 +77,7 @@
         });
       }
       function getButton(el) {
-        while (!el.id) el = el.parentElement;
+        while (el && !el.id) el = el.parentElement;
         if (el.tagName === "BODY") return null;
         return el;
       }
@@ -91,7 +91,8 @@
             KBL.state[btn.id] = btn.classList.toggle("selected");
             localStorage.setItem(btn.id, KBL.state[btn.id]);
           } else {
-            KBL.state.pressedKeys.add(btn.id);
+            if (KBL.state.pressedKeys.indexOf(btn.id) === -1)
+              KBL.state.pressedKeys.push(btn.id);
             btn.classList.add("selected");
             if (KBL.state.hasOwnProperty(btn.id)) KBL.state[btn.id] = true;
           }
@@ -106,7 +107,7 @@
 
         var btn = getButton(event.target);
         if (btn && ["ScrollLock", "NumLock", "CapsLock"].indexOf(btn.id) === -1) {
-          KBL.state.pressedKeys.delete(btn.id);
+          KBL.state.pressedKeys.splice(KBL.state.pressedKeys.indexOf(btn.id), 1);
           btn.classList.remove("selected");
           if (KBL.state.hasOwnProperty(btn.id)) KBL.state[btn.id] = false;
         }

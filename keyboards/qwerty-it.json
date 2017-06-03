@@ -1,7 +1,8 @@
 {
   "version": "1.0",
   "language": "it",
-  "type": "QWERTY",
+  "name": "QWERTY",
+  "onetouch": false,
   "size": { "rows": 6.25, "cols": 22.5 },
   "keys": [
     { "code": "Escape", "dx": null, "labels": ["Esc"] },

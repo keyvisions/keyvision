@@ -1,7 +1,8 @@
 {
   "version": "1.0",
   "language": "it",
-  "type": "Custom",
+  "name": "custom",
+  "onetouch": true,
   "size": { "rows": 3, "cols": 4 },
   "keys": [
     { "code": "Escape", "dx": null, "labels": ["Esc"] },
