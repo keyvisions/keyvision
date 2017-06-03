@@ -1,5 +1,6 @@
 body {position: absolute; top: 0; left:0; bottom: 0; right: 0; font-family: sans-serif; font-size: 20px; background-color: #000; color: #FFF;}
 .key, .placeholder {position: absolute; border-radius: 0.25em; width:64px; height:64px; border: 1px solid transparent;}
+.char {font-family: monospace; font-style: inherit; font-weight: inherit;}
 .key {border-color: #CCC;}
 .c20, .c21, .c22, .c23, .c30 {font-size: larger;}
 .c31 {font-size: smaller;}

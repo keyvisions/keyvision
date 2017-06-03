@@ -25,4 +25,7 @@ Links
 TODO
 ===
 Keyboards with one touch at a time
+Set keyboard font
+Highlight key
+Timestamp layout
 [gruntfile](https://gruntjs.com/sample-gruntfile)

@@ -1,20 +1,21 @@
 {
   "version": "1.0",
-  "language": "us",
+  "timestamp": null,
+  "language": null,
   "name": "keypad",
   "onetouch": true,
   "size": { "rows": 4, "cols": 3 },
   "keys": [
-    { "type": 3, "code": "Digit1", "dx": null, "labels": ["1"] },
+    { "type": 3, "code": "Digit1", "labels": ["1"] },
     { "type": 3, "code": "Digit2", "labels": ["2","abc"] },
     { "type": 3, "code": "Digit3", "labels": ["3","def"] },
-    { "type": 3, "code": "Digit4", "dx": null, "dy": 1, "labels": ["4","ghi"] },
+    { "type": 3, "code": "Digit4", "dx": null, "labels": ["4","ghi"] },
     { "type": 3, "code": "Digit5", "labels": ["5","jkl"] },
     { "type": 3, "code": "Digit6", "labels": ["6","mno"] },
-    { "type": 3, "code": "Digit7", "dx": null, "dy": 1, "labels": ["7","pqrs"] },
+    { "type": 3, "code": "Digit7", "dx": null, "labels": ["7","pqrs"] },
     { "type": 3, "code": "Digit8", "labels": ["8","tuv"] },
     { "type": 3, "code": "Digit9", "labels": ["9","wxyz"] },
-    { "type": 3, "code": "NumpadMultiply", "dx": null, "dy": 1, "labels": ["*"] },
+    { "type": 3, "code": "NumpadMultiply", "dx": null, "labels": ["*"] },
     { "type": 3, "code": "Digit0", "labels": ["0"] },
     { "type": 3, "code": "KeyQ", "labels": ["#"] }
   ]

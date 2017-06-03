@@ -2,7 +2,7 @@
   "name": "keyvision",
   "version": "1.0.0",
   "description": "KeyVision Project - Programmable visual keyboard",
-  "main": "keyboard.js",
+  "main": "server.js",
   "dependencies": {
     "express": "^4.15.3",
     "socket.io": "^2.0.2"
@@ -13,7 +13,9 @@
   },
   "keywords": [
     "keyboard",
-    "programmable"
+    "programmable",
+    "USB",
+    "HID"
   ],
   "author": "Giancarlo Trevisan <giancarlo@trevisan.it>",
   "license": "MIT"

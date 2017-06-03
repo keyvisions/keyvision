@@ -5,7 +5,6 @@ const
   fs = require("fs");
 
 var app = express();
-
 app.use(express.static(__dirname));
 
 var server = app.listen(8080, () => console.log("Programmable Visual Keyboard on http://localhost:8080/"));
@@ -13,13 +12,12 @@ var server = app.listen(8080, () => console.log("Programmable Visual Keyboard on
 io.listen(server).sockets.on("connection", socket => {
   console.log("Connection " + new Date());
 
-  let layout = __dirname + "/keyboards/keypad.json";
+  let layout = __dirname + "/keyboards/qwerty-it.json";
   fs.watch(layout, () => socket.emit("init", fs.readFileSync(layout).toString()));
 
   socket.emit("init", fs.readFileSync(layout).toString());
   socket.on("message", data => {
-    // Send to USB
-
+    // TODO: Send to USB
     console.log(data);
   });
 });
