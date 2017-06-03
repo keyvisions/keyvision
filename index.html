@@ -27,6 +27,7 @@
         renderKeyboard();
 
         document.body.addEventListener("touchstart", touchstart);
+        document.body.addEventListener("touchmove", touchmove);
         document.body.addEventListener("touchend", touchend);
         document.body.addEventListener("touchcancel", touchend);
         window.addEventListener("resize", renderKeyboard);
@@ -77,6 +78,8 @@
         });
       }
       function getButton(el) {
+        window.getSelection().removeAllRanges();
+
         while (el && !el.id) el = el.parentElement;
         if (el.tagName === "BODY") return null;
         return el;
@@ -100,6 +103,10 @@
 
         KBL.chars.forEach(char => char.innerHTML = (KBL.state["ShiftLeft"] || KBL.state["ShiftRight"] || KBL.state["CapsLock"]) ? char.innerHTML.toUpperCase() : char.innerHTML.toLowerCase());
         socket.send(KBL.state);
+      }
+      function touchmove(event) {
+        event.preventDefault();
+        event.stopPropagation();
       }
       function touchend(event) {
         event.preventDefault();
