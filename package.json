@@ -3,11 +3,18 @@
   "version": "1.0.0",
   "description": "KeyVision Project - Programmable visual keyboard",
   "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/keyvisions/keyvision.git"
+  },
   "dependencies": {
     "express": "^4.15.3",
+    "node-hid": "^0.5.4",
     "socket.io": "^2.0.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "grunt": "^1.0.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,7 +22,8 @@
     "keyboard",
     "programmable",
     "USB",
-    "HID"
+    "HID",
+    "touch"
   ],
   "author": "Giancarlo Trevisan <giancarlo@trevisan.it>",
   "license": "MIT"

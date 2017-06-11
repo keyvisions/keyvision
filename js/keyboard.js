@@ -1,4 +1,5 @@
-var socket = io.connect(), KBL; // Keyboard layout
+var socket = io.connect(),
+  KBL; // Keyboard layout
 
 socket.on("init", layout => {
   KBL = JSON.parse(layout) || {};
@@ -29,6 +30,7 @@ socket.on("font", font => {
   stylesheet.cssRules[2].style.fontWeight = font.weight || 'inherit';
 });
 socket.on("hilite", code => {}); // hilite specific key
+socket.on("key", key => {}); // Set specific key
 
 function renderKeyboard() {
   var kb = document.body,
@@ -45,7 +47,8 @@ function renderKeyboard() {
   // Draw keyboard
   kb.innerHTML = ""; // Clear keyboard
 
-  var x = Math.round(padding), y = Math.round(padding);
+  var x = Math.round(padding),
+    y = Math.round(padding);
   KBL.keys.forEach((key, i) => {
     x = (key.dx === null || i === 0) ? Math.round(padding) : x + Math.round((size + 2 * padding) * (1 + key.dx || 1));
     y += (key.dx === null && !key.dy) ? Math.round(size + 2 * padding) : Math.round((size + 2 * padding) * (key.dy || 0));
@@ -74,6 +77,7 @@ function renderKeyboard() {
     }
   });
 }
+
 function getButton(el) {
   window.getSelection().removeAllRanges();
 
@@ -81,9 +85,10 @@ function getButton(el) {
   if (el.tagName === "BODY") return null;
   return el;
 }
+
 function touchstart(event) {
   event.preventDefault();
-  event.stopPropagation();
+  //  event.stopPropagation();
 
   var btn = getButton(event.target);
   if (btn && btn.id) {
@@ -103,13 +108,15 @@ function touchstart(event) {
   KBL.chars.forEach(char => char.innerHTML = (KBL.state["ShiftLeft"] || KBL.state["ShiftRight"] || KBL.state["CapsLock"]) ? char.innerHTML.toUpperCase() : char.innerHTML.toLowerCase());
   socket.send(KBL.state);
 }
+
 function touchmove(event) {
   event.preventDefault();
-  event.stopPropagation();
+  //  event.stopPropagation();
 }
+
 function touchend(event) {
   event.preventDefault();
-  event.stopPropagation();
+  //  event.stopPropagation();
 
   var btn = getButton(event.target);
   if (btn && ["ScrollLock", "NumLock", "CapsLock"].indexOf(btn.id) === -1) {

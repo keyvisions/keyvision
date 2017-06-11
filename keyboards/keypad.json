@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "timestamp": null,
+  "type": "keypad",
   "language": null,
-  "name": "keypad",
   "onetouch": true,
   "size": { "rows": 4, "cols": 3 },
   "keys": [

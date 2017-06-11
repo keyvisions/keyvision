@@ -1,21 +1,18 @@
-PVK emulator (Programmable Visual Keyboard)
+KeyVision Project (Programmable Visual Keyboard)
 ===
 
-   - Raspberry PI Zero W
-   - 1920x540 Display (0.5K) 113dpi
-   - USB powered
+The aim of the project is build a programmable keyboard based on a Raspberry PI Zero configured as a USB Gadget and a touch screen.
+The Raspberry PI runs in kiosk mode http://localhost, a Node.js, Express and Sockets.io managed site.
+
+   - Raspberry PI Zero
+   - 1920x540 Display (0.5K) 113dpi (looking for a screen manufacturer to build the custom touch screen )
    - Keyboard layouts
-   - node.js + sockets: listen for layout, font, key set
-   - Bluetooth*
-   - WiFi*
-   - Camera*
-   - Speakers*
-   - Microphone*
+   - node.js, express and sockets.io: listen for layout, font, key highlight
 
 Keyboard layout
 ===
 
-Key type (1|2|3) (Special|Regular|Hybrid)
+Key type (1|2|3) (Action|Character|Hybrid)
 
 Links
 ===
@@ -29,3 +26,5 @@ Set keyboard font
 Highlight key
 Timestamp layout
 [gruntfile](https://gruntjs.com/sample-gruntfile)
+
+npm install hid-handler --save
