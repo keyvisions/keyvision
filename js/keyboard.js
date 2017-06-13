@@ -1,3 +1,7 @@
+/* Copyright (C) 2017 Giancarlo Trevisan - All Rights Reserved
+ * You may use, distribute and modify this code under the
+ * terms of the MIT license.
+ */
 var socket = io.connect(),
   KBL; // Keyboard layout
 
