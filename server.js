@@ -1,9 +1,12 @@
-// Server side code
+/* Copyright (C) 2017 Giancarlo Trevisan - All Rights Reserved
+ * You may use, distribute and modify this code under the
+ * terms of the MIT license.
+ */
+// Node.js server
 const
   express = require("express"),
   io = require("socket.io"),
-  fs = require("fs"),
-  HID = require('node-hid');
+  fs = require("fs");
 
 // Parse command line
 let args = process.argv.slice(2), port = 8080, layout = "qwerty-us";
@@ -17,13 +20,6 @@ for (let i = 0; i < args.length; ++i) {
     return;
   }
 }
-
-var devices = HID.devices();
-console.log(devices);
-var device = new HID.HID(1133,49948);
-device.read(function(err, data) {
-  console.log(err + ' ' + data);
-});
 
 let app = express();
 app.use(express.static(__dirname));

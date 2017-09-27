@@ -5,6 +5,10 @@
 var socket = io.connect(),
   KBL; // Keyboard layout
 
+// http://www.usb.org/developers/hidpage/Hut1_12v2.pdf (Page 53, Table 12)
+// https://docs.mbed.com/docs/ble-hid/en/latest/api/md_doc_HID.html
+// http://isticktoit.net/?p=1383
+
 socket.on("init", layout => {
   KBL = JSON.parse(layout) || {};
   KBL.state = {
@@ -60,6 +64,8 @@ function renderKeyboard() {
     var el = document.createElement("div");
     if (key.code) el.id = key.code;
     el.className = key.code ? "key" : "placeholder";
+    el.setAttribute("data-type", key.type || 1);
+    if (key.usageID) el.setAttribute("data-usageid", key.usageID);
     el.style.top = `${y}px`, el.style.left = `${x}px`;
 
     el.style.width = `${Math.round((size + 2 * padding) * (key.dw || 1) - 2 * padding)}px`;
@@ -92,7 +98,7 @@ function getButton(el) {
 
 function touchstart(event) {
   event.preventDefault();
-  //  event.stopPropagation();
+  event.stopPropagation();
 
   var btn = getButton(event.target);
   if (btn && btn.id) {
@@ -100,12 +106,13 @@ function touchstart(event) {
       KBL.state[btn.id] = btn.classList.toggle("selected");
       localStorage.setItem(btn.id, KBL.state[btn.id]);
     } else {
-      if (KBL.onetouch)
+      if (KBL.onetouch) {
+        KBL.state.pressedKeys.forEach(id => document.getElementById(id).classList.remove("selected"));
         KBL.state.pressedKeys = [btn.id];
-      else if (KBL.state.pressedKeys.indexOf(btn.id) === -1)
+      } else if (KBL.state.pressedKeys.indexOf(btn.id) === -1)
         KBL.state.pressedKeys.push(btn.id);
-      if (KBL.state.hasOwnProperty(btn.id)) KBL.state[btn.id] = true;
       btn.classList.add("selected");
+      if (KBL.state.hasOwnProperty(btn.id)) KBL.state[btn.id] = true;
     }
   }
 
@@ -115,12 +122,12 @@ function touchstart(event) {
 
 function touchmove(event) {
   event.preventDefault();
-  //  event.stopPropagation();
+  event.stopPropagation();
 }
 
 function touchend(event) {
   event.preventDefault();
-  //  event.stopPropagation();
+  event.stopPropagation();
 
   var btn = getButton(event.target);
   if (btn && ["ScrollLock", "NumLock", "CapsLock"].indexOf(btn.id) === -1) {

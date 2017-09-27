@@ -10,7 +10,7 @@ By the way, the name of my one man company is KeyVisions (founded in 1996/01/17)
 ## A revamp
 I've decided to revamp the KeyVision project. While waiting for a breakthrough in haptic technologies, endowing mechanical switch like characteristics to a 19" 18:5 touch screen with a 1920x540 resolution (1/2HD), I'd settle for a tablet or smartphone as keyboard substitutes. No soldering required.
 
-Let's transform a Raspberry PI Zero W into a USB OTG device making it appear as an HID keyboard to the attached host; we'll make the PI run a local node.js web application, at http://localhost, that emulates a touch sensitive, configurable keyboard that sends key press events (touch events really) to the HID interface. We'll configure the PI to start automatically in kiosk mode, thus, if a touch screen (any touch screen) is attached to the PI then we'll have a PVK in our hands&mdash;the KeyVision project can be used as the base for any project requiring a keyboard/keypad frontend. Alternatively, by visiting the PI's IP address with a touch device we'll be able to type away on the connected host&mdash;do you have a smart TV and are in need of a keyboard?
+Let's transform a Raspberry PI Zero W into a USB OTG device making it appear as an HID keyboard to the attached host; we'll make the PI run a local node.js web application, at http://localhost, that emulates a touch sensitive, configurable keyboard that sends key press events (touch events really) to the HID interface. We'll configure the PI to start automatically in kiosk mode, thus, if a touch screen (any touch screen) is attached to the PI then we'll have a PVK in our hands—the KeyVision project can be used as the base for any project requiring a keyboard/keypad frontend. Alternatively, by visiting the PI's IP address with a touch device we'll be able to type away on the connected host—do you have a smart TV and are in need of a keyboard?
 
 ## Setup
 What's required? A [Raspberry PI Zero W](https://www.raspberrypi.org/products/pi-zero-w/) (the W stands for Wi-Fi and Bluetooth), a [Raspian Jessie with Pixel](https://www.raspberrypi.org/downloads/raspbian/) image, a USB OTG cable to be inserted in the micro USB port of the PI on one end and the host on the other.
@@ -24,7 +24,7 @@ Key type (1|2|3) (Action|Character|Hybrid)
 Work in progress...
 
 ## Acknowledgments
-The Internet, a neverending source of experiences. The open source community, a wonderful group of brains that share their thoughts in code and hacks.
+The Internet, a neverending source of experiences. The open source community, a wonderful group of brains that share their thoughts in hacks and code.
 
 Work in progress...
 

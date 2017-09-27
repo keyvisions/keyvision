@@ -1,10 +1,14 @@
+/* Copyright (C) 2017 Giancarlo Trevisan - All Rights Reserved
+ * You may use, distribute and modify this code under the
+ * terms of the MIT license.
+ */
 body {position: absolute; top: 0; left:0; bottom: 0; right: 0; font-family: sans-serif; font-size: 20px; background-color: #000; color: #FFF;}
 .key, .placeholder {position: absolute; border-radius: 0.25em; width:64px; height:64px; border: 1px solid transparent;}
 .char {font-family: monospace; font-style: inherit; font-weight: inherit;}
 .key {border-color: #CCC;}
 .c20, .c21, .c22, .c23, .c30 {font-size: larger;}
 .c31 {font-size: smaller;}
-.c10, .c20, .c30 {position:absolute; top: 0.25em; left: 0.25em;}
+.c10, .c20, .c30, .c50 {position:absolute; top: 0.25em; left: 0.25em;}
 .c21, .c31 {position:absolute; bottom: 0.25em; left: 0.25em;}
 .c22 {position:absolute; bottom: 0.25em; right: 0.25em;}
 .c23 {position:absolute; top: 0.25em; right: 0.25em;}

@@ -1,6 +1,6 @@
 {
   "name": "keyvision",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "KeyVision Project - Programmable visual keyboard",
   "main": "server.js",
   "repository": {
@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "express": "^4.15.3",
-    "node-hid": "^0.5.4",
     "socket.io": "^2.0.2"
   },
   "devDependencies": {
