@@ -36,18 +36,21 @@ io.listen(server).sockets.on("connection", socket => {
       if (cmd.type === "layout") {
         socket.emit("init", fs.readFileSync(`${__dirname}/keyboards/${cmd.layout}.json`).toString());
         layout = cmd.layout;
-        console.log(`Requested "${layout}" on ${(new Date()).toLocaleString()}`)
+        console.log(`Requested "${layout}" on ${(new Date()).toLocaleString()}`);
       } else
         socket.emit(cmd.type, cmd.data);
-        console.log(`Requested "${cmd.type}: ${cmd.data}" on ${(new Date()).toLocaleString()}`)
+        console.log(`Requested "${cmd.type}: ${cmd.data}" on ${(new Date()).toLocaleString()}`);
     } catch (ex) {
       console.log(ex.message);
     }
   });
 
   socket.emit("init", fs.readFileSync(`${__dirname}/keyboards/${layout}.json`).toString());
-  socket.on("message", data => {
-    // TODO: prepare data structure for pooling by USB HOST
-    console.log(data);
+  socket.on("message", (data) => {
+    // Write to USB HOST
+    fs.writeFile('/dev/hidg0', data, err => { 
+//      console.log(data);
+      if (err) console.log(err);
+    });
   });
 });
