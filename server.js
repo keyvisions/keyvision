@@ -8,7 +8,10 @@ const
   fs = require("fs");
 
 // Parse command line
-let args = process.argv.slice(2), hostname = lanIP(), port = 8080, layout = "qwerty-us";
+let args = process.argv.slice(2),
+  hostname = lanIP(),
+  port = 8080,
+  layout = "qwerty-us";
 for (let i = 0; i < args.length; ++i) {
   if (args[i] === "-h" || args[i] === "--hostname")
     hostname = args[++i];
@@ -30,7 +33,7 @@ let server = app.listen(port, hostname, () => console.log(`Running Programmable 
 io.listen(server).sockets.on("connection", socket => {
   console.log(`Requested "${layout}" on ${(new Date()).toLocaleString()}`);
 
-//  fs.watch(`${__dirname}/keyboards/${layout}.json`, () => socket.emit("init", fs.readFileSync(`${__dirname}/keyboards/${layout}.json`).toString()));
+  //  fs.watch(`${__dirname}/keyboards/${layout}.json`, () => socket.emit("init", fs.readFileSync(`${__dirname}/keyboards/${layout}.json`).toString()));
   fs.watch(`${__dirname}/command.json`, (eventType, filename) => {
     try {
       let cmd = JSON.parse(fs.readFileSync(`${__dirname}/${filename}`).toString());
@@ -40,7 +43,7 @@ io.listen(server).sockets.on("connection", socket => {
         console.log(`Requested "${layout}" on ${(new Date()).toLocaleString()}`);
       } else
         socket.emit(cmd.type, cmd.data);
-        console.log(`Requested "${cmd.type}: ${cmd.data}" on ${(new Date()).toLocaleString()}`);
+      console.log(`Requested "${cmd.type}: ${cmd.data}" on ${(new Date()).toLocaleString()}`);
     } catch (ex) {
       console.log(ex.message);
     }
@@ -49,18 +52,19 @@ io.listen(server).sockets.on("connection", socket => {
   socket.emit("init", fs.readFileSync(`${__dirname}/keyboards/${layout}.json`).toString());
   socket.on("message", (data) => {
     // Write to USB HOST
-    fs.writeFile('/dev/hidg0', data, err => { 
+    fs.writeFile('/dev/hidg0', data, err => {
       if (err) console.log(err);
     });
   });
 });
 
 function lanIP() {
-  var ifaces = require("os").networkInterfaces(), address;
+  var ifaces = require("os").networkInterfaces(),
+    address;
 
   Object.keys(ifaces).forEach(ifname => {
     ifaces[ifname].forEach(iface => {
-      if (typeof address !== "undefined" || iface.internal) 
+      if (typeof address !== "undefined" || iface.internal)
         return;
       address = iface.address;
     });
@@ -68,4 +72,3 @@ function lanIP() {
 
   return address;
 }
-

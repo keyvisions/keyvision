@@ -8,12 +8,12 @@ var socket = io.connect(),
 socket.on("init", layout => {
   KBL = JSON.parse(layout) || {};
   KBL.state = {
-    mode: "LeftAlt", // LeftAlt | CtrlShiftu
-    K71: false, // Scroll Lock 
+    mode: "CtrlShiftu", // LeftAlt | CtrlShiftu
+    K71: false, // Scroll Lock
     K83: false, // Num Lock
     K57: false, // Caps Lock
     modifiers: 0,
-    repeatDelay: 700, 
+    repeatDelay: 700,
     repeatRate: 30,
     delayID: 0,
     repeaterID: 0
@@ -53,9 +53,10 @@ function renderKeyboard() {
   stylesheet.cssRules[1].style.height = `${size}px`;
 
   // Draw keyboard
-//  kb.innerHTML = ""; // Clear keyboard
+  kb.innerHTML = ""; // Clear keyboard
 
-  var x = Math.round(padding), y = Math.round(padding);
+  var x = Math.round(padding),
+    y = Math.round(padding);
 
   KBL.keys.forEach((key, i) => {
     x = (key.dx === null || i === 0) ? Math.round(padding) : x + Math.round((size + 2 * padding) * (1 + key.dx || 1));
@@ -94,7 +95,7 @@ function renderKeyboard() {
 function getButton(el) {
   window.getSelection().removeAllRanges();
 
-  while (el && !el.id) 
+  while (el && !el.id)
     el = el.parentElement;
   return el;
 }
@@ -149,7 +150,7 @@ function touchstart(event) {
         unicode = btn.querySelector(".c22").innerText.charCodeAt(0);
       if ((KBL.state.modifiers === 66 || KBL.state.modifiers === 96) && btn.querySelector(".c23")) // RightAlt+Shift
 
-      unicode = btn.querySelector(".c23").innerText.charCodeAt(0);
+        unicode = btn.querySelector(".c23").innerText.charCodeAt(0);
 
       var packet;
       if (KBL.state.mode === "LeftAlt")
@@ -165,7 +166,11 @@ function touchstart(event) {
 
       if (KBL.state.repeaterID !== 0)
         clearInterval(KBL.state.repeaterID);
-      KBL.state.delayID = setTimeout(() => { KBL.state.repeaterID = setInterval(() => { socket.send(packet); }, KBL.state.repeatRate); }, KBL.state.repeatDelay);
+      KBL.state.delayID = setTimeout(() => {
+        KBL.state.repeaterID = setInterval(() => {
+          socket.send(packet);
+        }, KBL.state.repeatRate);
+      }, KBL.state.repeatDelay);
 
     } else {
       // Handle as regular HID packet
@@ -182,7 +187,7 @@ function touchstart(event) {
 
   // Reflect Shift or Caps Lock
   KBL.chars.forEach(char => char.innerHTML = ((KBL.state.modifiers & 34) !== 0 || KBL.state.K57) ? char.innerHTML.toUpperCase() : char.innerHTML.toLowerCase());
-}        
+}
 
 function touchcancel(event) {
   event.preventDefault();
@@ -209,7 +214,7 @@ function touchend(event) {
 
     // Send clear HID packet
     var id = parseInt(btn.id.substring(1));
-    if ((KBL.state.mode === "LeftAlt" && KBL.state.modifiers === 4 && id >= 89 && id <=98) === false) { 
+    if ((KBL.state.mode === "LeftAlt" && KBL.state.modifiers === 4 && id >= 89 && id <= 98) === false) {
       socket.send(asHIDPacket(0, 0));
     }
 
