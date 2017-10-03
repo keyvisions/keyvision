@@ -2,21 +2,22 @@
  * You may use, distribute and modify this code under the
  * terms of the MIT license.
  */
-// Node.js server
 const
   express = require("express"),
   io = require("socket.io"),
   fs = require("fs");
 
 // Parse command line
-let args = process.argv.slice(2), port = 8080, layout = "qwerty-us";
+let args = process.argv.slice(2), hostname = lanIP(), port = 8080, layout = "qwerty-us";
 for (let i = 0; i < args.length; ++i) {
-  if (args[i] === "-p" || args[i] === "--port")
+  if (args[i] === "-h" || args[i] === "--hostname")
+    hostname = args[++i];
+  else if (args[i] === "-p" || args[i] === "--port")
     port = args[++i];
   else if (args[i] === "-l" || args[i] === "--layout")
     layout = args[++i];
   else {
-    console.log(`Usage: node [options] server.js [-p|--port port_number] [-l|--layout layout_name]`);
+    console.log(`Usage: node [options] server.js [-p|--port port_number] [-h|--hostname hostname][-l|--layout layout_name]`);
     return;
   }
 }
@@ -24,12 +25,12 @@ for (let i = 0; i < args.length; ++i) {
 let app = express();
 app.use(express.static(__dirname));
 
-let server = app.listen(port, () => console.log(`Programmable Visual Keyboard on //localhost:${port}/`));
+let server = app.listen(port, hostname, () => console.log(`Running Programmable Visual Keyboard ${hostname}:${port}`));
 
 io.listen(server).sockets.on("connection", socket => {
   console.log(`Requested "${layout}" on ${(new Date()).toLocaleString()}`);
 
-  fs.watch(`${__dirname}/keyboards/${layout}.json`, () => socket.emit("init", fs.readFileSync(`${__dirname}/keyboards/${layout}.json`).toString()));
+//  fs.watch(`${__dirname}/keyboards/${layout}.json`, () => socket.emit("init", fs.readFileSync(`${__dirname}/keyboards/${layout}.json`).toString()));
   fs.watch(`${__dirname}/command.json`, (eventType, filename) => {
     try {
       let cmd = JSON.parse(fs.readFileSync(`${__dirname}/${filename}`).toString());
@@ -49,8 +50,22 @@ io.listen(server).sockets.on("connection", socket => {
   socket.on("message", (data) => {
     // Write to USB HOST
     fs.writeFile('/dev/hidg0', data, err => { 
-//      console.log(data);
       if (err) console.log(err);
     });
   });
 });
+
+function lanIP() {
+  var ifaces = require("os").networkInterfaces(), address;
+
+  Object.keys(ifaces).forEach(ifname => {
+    ifaces[ifname].forEach(iface => {
+      if (typeof address !== "undefined" || iface.internal) 
+        return;
+      address = iface.address;
+    });
+  });
+
+  return address;
+}
+

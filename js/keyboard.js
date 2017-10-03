@@ -5,27 +5,28 @@
 var socket = io.connect(),
   KBL; // Keyboard layout
 
-// http://www.usb.org/developers/hidpage/Hut1_12v2.pdf (Page 53, Table 12)
-// https://docs.mbed.com/docs/ble-hid/en/latest/api/md_doc_HID.html
-// http://isticktoit.net/?p=1383
-
 socket.on("init", layout => {
   KBL = JSON.parse(layout) || {};
   KBL.state = {
-    "K71": false, // Scroll Lock 
-    "K83": false, // Num Lock
-    "K57": false, // Caps Lock
-    packet: [0, 0, 0, 0, 0, 0, 0, 0]
+    mode: "LeftAlt", // LeftAlt | CtrlShiftu
+    K71: false, // Scroll Lock 
+    K83: false, // Num Lock
+    K57: false, // Caps Lock
+    modifiers: 0,
+    repeatDelay: 700, 
+    repeatRate: 30,
+    delayID: 0,
+    repeaterID: 0
   };
 
   renderKeyboard();
 
   document.body.addEventListener("touchstart", touchstart);
-  document.body.addEventListener("mousedown", touchstart);
-  document.body.addEventListener("touchmove", touchmove);
-  document.body.addEventListener("mouseup", touchend);
+  document.body.addEventListener("touchmove", touchcancel);
   document.body.addEventListener("touchend", touchend);
-  document.body.addEventListener("touchcancel", touchend);
+  document.body.addEventListener("touchcancel", touchcancel);
+  document.body.addEventListener("contextmenu", touchcancel);
+
   window.addEventListener("resize", renderKeyboard);
 });
 
@@ -52,7 +53,7 @@ function renderKeyboard() {
   stylesheet.cssRules[1].style.height = `${size}px`;
 
   // Draw keyboard
-  kb.innerHTML = ""; // Clear keyboard
+//  kb.innerHTML = ""; // Clear keyboard
 
   var x = Math.round(padding), y = Math.round(padding);
 
@@ -78,6 +79,7 @@ function renderKeyboard() {
 
   KBL.chars = document.querySelectorAll(".char"); // Used to handle character case
 
+  // Load saved keyboard state
   ["K71", "K83", "K57"].forEach(lock => {
     if (document.getElementById(lock) && localStorage.getItem(lock) === "true") {
       document.getElementById(lock).classList.add("selected");
@@ -86,7 +88,7 @@ function renderKeyboard() {
   });
 
   // Reflect Caps Lock
-  if (KBL.state["K57"]) KBL.chars.forEach(char => char.innerHTML = char.innerHTML.toUpperCase());
+  if (KBL.state.K57) KBL.chars.forEach(char => char.innerHTML = char.innerHTML.toUpperCase());
 }
 
 function getButton(el) {
@@ -97,9 +99,32 @@ function getButton(el) {
   return el;
 }
 
-function asHIDPacket(data) {
-  var packet = "";
-  data.forEach(number => packet += String.fromCharCode(number));
+function asHIDPacket(modifiers, key, terminate) {
+  document.getElementById("K44").innerHTML += "(" + modifiers + ", " + key + ") ";
+  return `${String.fromCharCode(modifiers)}\0${String.fromCharCode(key)}\0\0\0\0\0${terminate === true ? "\0\0\0\0\0\0\0\0" : ""}`;
+}
+
+// Packet sequence for Ctrl+Shift+u [unicode] combination
+function CtrlShiftu(unicode) {
+  var packet = asHIDPacket(3, 24, true); // Ctrl+Shift+u
+
+  unicode.toString(16).split("").forEach(digit => {
+    packet += asHIDPacket(0, [39, 30, 31, 32, 33, 34, 35, 36, 37, 38, 4, 5, 6, 7, 8, 9][parseInt(digit, 16)], true);
+  });
+  packet += asHIDPacket(0, 44, true); // Space
+
+  return packet;
+}
+
+// Packet sequence for LeftAlt [unicode] combinaton
+function LeftAlt(unicode) {
+  var packet = asHIDPacket(4, 226) + asHIDPacket(4, 98);
+
+  unicode.toString().split("").forEach(digit => {
+    packet += asHIDPacket(4, [98, 89, 90, 91, 92, 93, 94, 95, 96, 97][parseInt(digit)]);
+  });
+  packet += asHIDPacket(0, 0);
+
   return packet;
 }
 
@@ -109,36 +134,42 @@ function touchstart(event) {
 
   var btn = getButton(event.target);
   if (btn && btn.id) {
-	var usageId = parseInt(btn.id.substring(1));
-
+    // LeftControl, LeftShift, LeftAlt, LeftGUI, RightControl, RightShift, RightAlt, RightGUI
     var modifier = ["K224", "K225", "K226", "K227", "K228", "K229", "K230", "K231"].indexOf(btn.id);
     if (modifier !== -1)
-      KBL.state.packet[0] |= 1 << modifier;
-
-    if (KBL.state.packet.indexOf(usageId, 2) === -1 && KBL.state.packet.indexOf(0, 2) !== -1)
-      KBL.state.packet[KBL.state.packet.indexOf(0, 2)] = usageId;
+      KBL.state.modifiers |= 1 << modifier;
 
     if (btn.getAttribute("data-type") === "2") {
+      // Handle as unicode HID packet
       var unicode = btn.querySelector(".c20").innerText.charCodeAt(0); // Shift
-      if (KBL.state.packet[0] === 0 && btn.querySelector(".c21")) // Nothing
-        unicode = btn.querySelector(".c21").innerText.charCodeAt(0);
-      if (KBL.state.packet[0] === 64 && btn.querySelector(".c22")) // AltRight
-        unicode = btn.querySelector(".c22").innerText.charCodeAt(0);
-      if ((KBL.state.packet[0] === 66 || KBL.state.packet[0] === 96) && btn.querySelector(".c23")) // AltRight+Shift
-        unicode = btn.querySelector(".c23").innerText.charCodeAt(0);
 
-      // Send HID packets sequence as CTRL+SHIFT+u 0[unicode] or ALTGR+[unicode]
-      const digitsId = [39, 30, 31, 32, 33, 34, 35, 36, 37, 38, 4, 5, 6, 7, 8, 9];
-      var packet = asHIDPacket([3, 0, 24, 0, 0, 0, 0, 0]); // CTRL+SHIFT+u
-      unicode.toString(16).split("").forEach(digit => {
-        packet += asHIDPacket([0, 0, digitsId[parseInt(digit, 16)], 0, 0, 0, 0, 0]);
-      });
-      packet += asHIDPacket([0, 0, 44, 0, 0, 0, 0, 0]); // Space
-      packet += asHIDPacket([0, 0, 0, 0, 0, 0, 0, 0]);
+      if (KBL.state.modifiers === 0 && btn.querySelector(".c21")) // Nothing
+        unicode = btn.querySelector(".c21").innerText.charCodeAt(0);
+      if (KBL.state.modifiers === 64 && btn.querySelector(".c22")) // RightAlt
+        unicode = btn.querySelector(".c22").innerText.charCodeAt(0);
+      if ((KBL.state.modifiers === 66 || KBL.state.modifiers === 96) && btn.querySelector(".c23")) // RightAlt+Shift
+
+      unicode = btn.querySelector(".c23").innerText.charCodeAt(0);
+
+      var packet;
+      if (KBL.state.mode === "LeftAlt")
+        packet = LeftAlt(unicode);
+      else
+        packet = CtrlShiftu(unicode);
+
+      // Unlock CapsLock if active since it interferes with this packet
+      if (KBL.state.K57)
+        packet = asHIDPacket(0, 57, true) + packet + asHIDPacket(0, 57, true);
+
       socket.send(packet);
-    } else if (modifier === -1) {
-      // Send HID packet
-      socket.send(asHIDPacket(KBL.state.packet));
+
+      if (KBL.state.repeaterID !== 0)
+        clearInterval(KBL.state.repeaterID);
+      KBL.state.delayID = setTimeout(() => { KBL.state.repeaterID = setInterval(() => { socket.send(packet); }, KBL.state.repeatRate); }, KBL.state.repeatDelay);
+
+    } else {
+      // Handle as regular HID packet
+      socket.send(asHIDPacket(KBL.state.modifiers, parseInt(btn.id.substring(1))));
     }
 
     if (KBL.state.hasOwnProperty(btn.id)) {
@@ -150,10 +181,10 @@ function touchstart(event) {
   }
 
   // Reflect Shift or Caps Lock
-  KBL.chars.forEach(char => char.innerHTML = ((KBL.state.packet[0] & 34) !== 0 || KBL.state["K57"]) ? char.innerHTML.toUpperCase() : char.innerHTML.toLowerCase());
+  KBL.chars.forEach(char => char.innerHTML = ((KBL.state.modifiers & 34) !== 0 || KBL.state.K57) ? char.innerHTML.toUpperCase() : char.innerHTML.toLowerCase());
 }        
 
-function touchmove(event) {
+function touchcancel(event) {
   event.preventDefault();
   event.stopPropagation();
 }
@@ -164,24 +195,28 @@ function touchend(event) {
 
   var btn = getButton(event.target);
   if (btn && btn.id) {
-    var usageId = parseInt(btn.id.substring(1));
-
+    // LeftControl, LeftShift, LeftAlt, LeftGUI, RightControl, RightShift, RightAlt, RightGUI
     var modifier = ["K224", "K225", "K226", "K227", "K228", "K229", "K230", "K231"].indexOf(btn.id);
     if (modifier !== -1)
-      KBL.state.packet[0] ^= 1 << modifier;
+      KBL.state.modifiers ^= 1 << modifier;
 
-    var i = KBL.state.packet.indexOf(usageId, 2);
-    if (i !== -1)
-      KBL.state.packet[i] = 0;
+    if (KBL.state.delayID !== 0)
+      clearTimeout(KBL.state.delayID);
+    if (KBL.state.repeaterID !== 0) {
+      clearInterval(KBL.state.repeaterID);
+      KBL.state.repeaterID = 0;
+    }
 
-    // Send HID packet
-    socket.send(asHIDPacket([0, 0, 0, 0, 0, 0, 0, 0]));
+    // Send clear HID packet
+    var id = parseInt(btn.id.substring(1));
+    if ((KBL.state.mode === "LeftAlt" && KBL.state.modifiers === 4 && id >= 89 && id <=98) === false) { 
+      socket.send(asHIDPacket(0, 0));
+    }
 
     if (!KBL.state.hasOwnProperty(btn.id))
       btn.classList.remove("selected");
   }
 
   // Reflect Shift or Caps Lock
-  KBL.chars.forEach(char => char.innerHTML = ((KBL.state.packet[0] & 34) !== 0 || KBL.state["K57"]) ? char.innerHTML.toUpperCase() : char.innerHTML.toLowerCase());
-}        
-
+  KBL.chars.forEach(char => char.innerHTML = ((KBL.state.modifiers & 34) !== 0 || KBL.state.K57) ? char.innerHTML.toUpperCase() : char.innerHTML.toLowerCase());
+}

@@ -30,3 +30,9 @@ Work in progress...
 
 ## Keywords
 keyboard, programmable, visual, wireless, raspberrypi, OTG, HID, node.js, express, sockets.io, kiosk, domotics
+
+// http://www.usb.org/developers/hidpage/Hut1_12v2.pdf (Page 53, Table 12)
+// https://docs.mbed.com/docs/ble-hid/en/latest/api/md_doc_HID.html
+// http://isticktoit.net/?p=1383
+
+
