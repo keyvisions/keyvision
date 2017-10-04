@@ -53,7 +53,7 @@ function renderKeyboard() {
   stylesheet.cssRules[1].style.height = `${size}px`;
 
   // Draw keyboard
-  kb.innerHTML = ""; // Clear keyboard
+  kb.innerHTML = "<div id=\"statusbar\"></div>"; // Clear keyboard
 
   var x = Math.round(padding),
     y = Math.round(padding);
@@ -101,7 +101,7 @@ function getButton(el) {
 }
 
 function asHIDPacket(modifiers, key, terminate) {
-  document.getElementById("K44").innerHTML += "(" + modifiers + ", " + key + ") ";
+  //document.getElementById("statusbar").innerHTML += "(" + modifiers + ", " + key + ") ";
   return `${String.fromCharCode(modifiers)}\0${String.fromCharCode(key)}\0\0\0\0\0${terminate === true ? "\0\0\0\0\0\0\0\0" : ""}`;
 }
 
