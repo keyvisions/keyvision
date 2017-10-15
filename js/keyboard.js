@@ -8,7 +8,7 @@ var socket = io.connect(),
 socket.on("init", layout => {
   KBL = JSON.parse(layout) || {};
   KBL.state = {
-    mode: "CtrlShiftu", // LeftAlt | CtrlShiftu
+    mode: "LeftAlt", // LeftAlt | CtrlShiftu
     K71: false, // Scroll Lock
     K83: false, // Num Lock
     K57: false, // Caps Lock
@@ -119,10 +119,10 @@ function CtrlShiftu(unicode) {
 
 // Packet sequence for LeftAlt [unicode] combinaton
 function LeftAlt(unicode) {
-  var packet = asHIDPacket(4, 226) + asHIDPacket(4, 98);
+  var packet = asHIDPacket(4, 0) + asHIDPacket(4, 98) + asHIDPacket(4, 0);
 
   unicode.toString().split("").forEach(digit => {
-    packet += asHIDPacket(4, [98, 89, 90, 91, 92, 93, 94, 95, 96, 97][parseInt(digit)]);
+    packet += asHIDPacket(4, [98, 89, 90, 91, 92, 93, 94, 95, 96, 97][parseInt(digit)]) + asHIDPacket(4, 0);
   });
   packet += asHIDPacket(0, 0);
 
