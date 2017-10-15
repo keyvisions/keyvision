@@ -33,8 +33,7 @@ let server = app.listen(port, hostname, () => console.log(`Running Programmable 
 io.listen(server).sockets.on("connection", socket => {
   console.log(`Requested "${layout}" on ${(new Date()).toLocaleString()}`);
 
-  //  fs.watch(`${__dirname}/keyboards/${layout}.json`, () => socket.emit("init", fs.readFileSync(`${__dirname}/keyboards/${layout}.json`).toString()));
-  fs.watch(`${__dirname}/command.json`, (eventType, filename) => {
+  fs.watch(`${__dirname}/.keyvisionrc`, (eventType, filename) => {
     try {
       let cmd = JSON.parse(fs.readFileSync(`${__dirname}/${filename}`).toString());
       if (cmd.type === "layout") {
@@ -52,9 +51,7 @@ io.listen(server).sockets.on("connection", socket => {
   socket.emit("init", fs.readFileSync(`${__dirname}/keyboards/${layout}.json`).toString());
   socket.on("message", (data) => {
     // Write to USB HOST
-    fs.writeFile('/dev/hidg0', data, err => {
-      if (err) console.log(err);
-    });
+    fs.writeFileSync('/dev/hidg0', data); //, err => { if (err) console.log(err); });
   });
 });
 

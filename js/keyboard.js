@@ -101,7 +101,7 @@ function getButton(el) {
 }
 
 function asHIDPacket(modifiers, key, terminate) {
-  //document.getElementById("statusbar").innerHTML += "(" + modifiers + ", " + key + ") ";
+//  document.getElementById("statusbar").innerHTML += "(" + modifiers + ", " + key + ") ";
   return `${String.fromCharCode(modifiers)}\0${String.fromCharCode(key)}\0\0\0\0\0${terminate === true ? "\0\0\0\0\0\0\0\0" : ""}`;
 }
 
@@ -129,18 +129,18 @@ function LeftAlt(unicode) {
   return packet;
 }
 
-function touchstart(event) {
-  event.preventDefault();
-  event.stopPropagation();
+function touchstart(e) {
+  e.preventDefault();
+  e.stopPropagation();
 
-  var btn = getButton(event.target);
+  var btn = getButton(e.target);
   if (btn && btn.id) {
     // LeftControl, LeftShift, LeftAlt, LeftGUI, RightControl, RightShift, RightAlt, RightGUI
     var modifier = ["K224", "K225", "K226", "K227", "K228", "K229", "K230", "K231"].indexOf(btn.id);
     if (modifier !== -1)
       KBL.state.modifiers |= 1 << modifier;
 
-    if (btn.getAttribute("data-type") === "2") {
+    if (btn.getAttribute("data-type") === "2" && (KBL.state.modifiers & ~98) === 0 ) {
       // Handle as unicode HID packet
       var unicode = btn.querySelector(".c20").innerText.charCodeAt(0); // Shift
 
@@ -187,18 +187,21 @@ function touchstart(event) {
 
   // Reflect Shift or Caps Lock
   KBL.chars.forEach(char => char.innerHTML = ((KBL.state.modifiers & 34) !== 0 || KBL.state.K57) ? char.innerHTML.toUpperCase() : char.innerHTML.toLowerCase());
+
+  return false;
 }
 
-function touchcancel(event) {
-  event.preventDefault();
-  event.stopPropagation();
+function touchcancel(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  return false;
 }
 
-function touchend(event) {
-  event.preventDefault();
-  event.stopPropagation();
+function touchend(e) {
+  e.preventDefault();
+  e.stopPropagation();
 
-  var btn = getButton(event.target);
+  var btn = getButton(e.target);
   if (btn && btn.id) {
     // LeftControl, LeftShift, LeftAlt, LeftGUI, RightControl, RightShift, RightAlt, RightGUI
     var modifier = ["K224", "K225", "K226", "K227", "K228", "K229", "K230", "K231"].indexOf(btn.id);
@@ -224,4 +227,6 @@ function touchend(event) {
 
   // Reflect Shift or Caps Lock
   KBL.chars.forEach(char => char.innerHTML = ((KBL.state.modifiers & 34) !== 0 || KBL.state.K57) ? char.innerHTML.toUpperCase() : char.innerHTML.toLowerCase());
+
+  return false;
 }
