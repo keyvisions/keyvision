@@ -13,30 +13,24 @@ I decided to revamp the KeyVision project when I came across the [Raspberry Pi Z
 1. Download and install the latest [Raspbian with desktop image](https://www.raspberrypi.org/downloads/raspbian/) on a MicroSD,
 2. Configure the Zero WiFi, 
 3. Configure the Zero as an HID keyboard, see  [Composite USB Gadgets on the Raspberry Pi Zero](http://isticktoit.net/?p=1383),
-4. Connect to the Zero via SSH and install [Node.js](https://nodejs.org/en/download/),
-5. Download this project code
+4. Insert the MicroSD in the Zero and power it up by connecting the USB cable from the host PC to the Zero USB port (not the PWR IN!),
+5. Connect to the Zero via SSH and install [Node.js](https://nodejs.org/en/download/) (you'll have to remove the preinstalled node.js version),
+6. Download this project code
 
 At the prompt, change to the project directory and type:
 
 $ sudo node keyvision
 
+
+## 
 ...
 While waiting for a breakthrough in haptic technologies, endowing mechanical switch like characteristics to a 19" 18:5 multitouch screen with a 1920x540 resolution (1/2HD), I'd settle for a tablet or smartphone as keyboard substitutes. No soldering required.
 
 Let's transform a Raspberry PI Zero W into a USB OTG device making it appear as an HID keyboard to the attached host; we'll make the PI run a local node.js web application, at http://localhost, that emulates a touch sensitive, configurable keyboard that sends key press events (touch events really) to the HID interface. We'll configure the PI to start automatically in kiosk mode, thus, if a touch screen (any touch screen) is attached to the PI then we'll have a PVK in our hands—the KeyVision project can be used as the base for any project requiring a keyboard/keypad frontend. Alternatively, by visiting the PI's IP address with a touch device we'll be able to type away on the connected host—do you have a smart TV and are in need of a keyboard?
 
-## Setup
-What's required? A [Raspberry PI Zero W](https://www.raspberrypi.org/products/pi-zero-w/) (the W stands for Wi-Fi and Bluetooth), a [Raspian](https://www.raspberrypi.org/downloads/raspbian/) image, a USB OTG cable to be inserted in the micro USB port of the PI on one end and the host on the other.
-
-The project uses HTML, CSS, Javascript, JSON, Node.js, Express and sockets.io.
-
-## Sources
-These are readings that helped in the project:
+## Documentation
 [Universal Serial Bus (USB)](http://www.usb.org/developers/hidpage/Hut1_12v2.pdf) (Page 53, Table 12)
 [The USB HID protocol](https://docs.mbed.com/docs/ble-hid/en/latest/api/md_doc_HID.html)
 
 ## Acknowledgments
 The Internet, a neverending source of experiences. The open source community, a wonderful group of brains that share their thoughts in hacks and code.
-
-## Keywords
-keyboard, programmable, visual, wireless, raspberrypi, OTG, HID, node.js, express, sockets.io, kiosk
