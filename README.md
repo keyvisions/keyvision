@@ -13,14 +13,16 @@ I decided to revamp the KeyVision project when I came across the [Raspberry Pi Z
 1. Download and install the latest [Raspbian with desktop image](https://www.raspberrypi.org/downloads/raspbian/) on a MicroSD,
 2. Configure the Zero WiFi, 
 3. Configure the Zero as an HID keyboard, see  [Composite USB Gadgets on the Raspberry Pi Zero](http://isticktoit.net/?p=1383),
-4. Insert the MicroSD in the Zero and power it up by connecting the USB cable from a host PC to the Zero USB port (not the PWR IN!),
+4. Insert the MicroSD in the Zero and power it up by connecting the USB cable from a host PC to the Zero USB port (not the PWR IN port!),
 5. Connect to the Zero via SSH and install [Node.js](https://nodejs.org/en/download/) (you'll have to remove the preinstalled node.js version),
 6. Download this project code
 
 At the prompt, change to the project directory and type:
 
+```
 $ sudo node keyvision
 Running KeyVision on ${hostname}:${port}
+```
 
 Pick up your mobile phone or tablet, connect to the same WiFi the Zero is connected to, open up a browser and visit http://${hostname}:${port}, a QWERTY US keyboard should appear, touch its keys, the host PC to which the Zero is connected should receive the key clicks.
 
@@ -30,8 +32,8 @@ This project is a prof of concept creating a keyboard as a service. I am launchi
 Let's transform a Raspberry PI Zero W into a USB OTG device making it appear as an HID keyboard to the attached host; we'll make the PI run a local node.js web application, at http://localhost, that emulates a touch sensitive, configurable keyboard that sends key press events (touch events really) to the HID interface. We'll configure the PI to start automatically in kiosk mode, thus, if a touch screen (any touch screen) is attached to the PI then we'll have a PVK in our hands—the KeyVision project can be used as the base for any project requiring a keyboard/keypad frontend. Alternatively, by visiting the PI's IP address with a touch device we'll be able to type away on the connected host—do you have a smart TV and are in need of a keyboard?
 
 ## Documentation
-[Universal Serial Bus (USB)](http://www.usb.org/developers/hidpage/Hut1_12v2.pdf) (Page 53, Table 12)
-[The USB HID protocol](https://docs.mbed.com/docs/ble-hid/en/latest/api/md_doc_HID.html)
+- [Universal Serial Bus (USB)](http://www.usb.org/developers/hidpage/Hut1_12v2.pdf) (Page 53, Table 12)
+- [The USB HID protocol](https://docs.mbed.com/docs/ble-hid/en/latest/api/md_doc_HID.html)
 
 ## Acknowledgments
 The Internet, a neverending source of experiences. The open source community, a wonderful group of brains that share their thoughts in hacks and code.
