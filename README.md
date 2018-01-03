@@ -7,7 +7,7 @@ Around 2000 Art Lebedev released the wonderfully designed mechanical keyboard [O
 
 By the way, the name of my one man company is KeyVisions (founded in 1996/01/17), it's genesis stems from the KeyVision project ;)
 
-## Setup
+## The proof of concept
 I decided to revamp the KeyVision project when I came across the [Raspberry Pi Zero W](https://www.raspberrypi.org/products/raspberry-pi-zero-w/) and the fact it can be transformed into an HID keyboard. If you have a spare Respberry Pi Zero W and would like to transform it into a *keyboard as a service device*, do the following:
 
 1. Download and install the latest [Raspbian with desktop image](https://www.raspberrypi.org/downloads/raspbian/) on a MicroSD,
@@ -29,7 +29,7 @@ Pick up your mobile phone or tablet, connect to the same WiFi the Zero is connec
 (If you'd like a preconfigured MicroSD image, contact me)
 
 ## The real thing
-This github project is a prof of concept, the aim is to build a real *Programmable Visual Keyboard*. A single prototype can be built for $250, the idea is to make it affordable by industrializing it: while waiting for a breakthrough in haptic technologies that endow mechanical switch like characteristics to a 22" multitouch panel with a 1920x540 resolution (1/2HD), I settle for a standard multitouch panel, mounted on a keyboard sized enclosure, driven by a Raspberry Pi Zero W running in kiosk mode configured as a HID keyboard.
+This github project is a proof of concept, the aim is to build a real *Programmable Visual Keyboard*. A single prototype can be built for $250, the idea is to make it affordable by industrializing it: while waiting for a breakthrough in haptic technologies that endow mechanical switch like characteristics to a 22" multi-touch panel with a 1920x540 resolution (1/2HD), I settle for a standard multi-touch panel, mounted on a keyboard sized enclosure, driven by a Raspberry Pi Zero W running in kiosk mode configured as a HID keyboard.
 
 (If you're interested, contact me)
 
