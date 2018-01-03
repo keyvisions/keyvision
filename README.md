@@ -8,7 +8,7 @@ Around 2000 Art Lebedev released the wonderfully designed mechanical keyboard [O
 By the way, the name of my one man company is KeyVisions (founded in 1996/01/17), it's genesis stems from the KeyVision project ;)
 
 ## The proof of concept
-I decided to revamp the KeyVision project when I came across the [Raspberry Pi Zero W](https://www.raspberrypi.org/products/raspberry-pi-zero-w/) and the fact it can be transformed into an HID keyboard. If you have a spare Respberry Pi Zero W and would like to transform it into a *keyboard as a service device*, do the following:
+In this era of IOT, I decided to revamp the KeyVision project when I came across the [Raspberry Pi Zero W](https://www.raspberrypi.org/products/raspberry-pi-zero-w/) and the fact it can be transformed into an HID keyboard. If you have a spare Respberry Pi Zero W and would like to transform it into a *keyboard as a service device*, do the following:
 
 1. Download and install the latest [Raspbian with desktop image](https://www.raspberrypi.org/downloads/raspbian/) on a MicroSD,
 2. Configure the Zero WiFi, 
@@ -17,14 +17,14 @@ I decided to revamp the KeyVision project when I came across the [Raspberry Pi Z
 5. Connect to the Zero via SSH and install [Node.js](https://nodejs.org/en/download/) (you'll have to remove the preinstalled node.js version),
 6. Download this project code
 
-At the prompt, change to the project directory and type:
+At the prompt, change to the project directory then type:
 
 ```
 $ sudo node keyvision
 Running KeyVision on ${hostname}:${port}
 ```
 
-Pick up your mobile phone or tablet, connect to the same WiFi the Zero is connected to, open up a browser and visit http://${hostname}:${port}, a QWERTY US keyboard should appear, touch its keys, the host PC to which the Zero is connected should receive the key clicks.
+Pick up your mobile phone or tablet, connect to the same WiFi the Zero is connected to, open up a browser and visit http://${hostname}:${port}, a QWERTY US keyboard should appear, touch its keys, the host PC to which the Zero is connected should receive the key clicks and respond accordingly.
 
 (If you'd like a preconfigured MicroSD image, contact me)
 
