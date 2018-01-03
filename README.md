@@ -28,10 +28,8 @@ Pick up your mobile phone or tablet, connect to the same WiFi the Zero is connec
 
 (If you'd like a preconfigured MicroSD image drop me a note)
 
-## Kickstarter
-This github project is a prof of concept, the aim is to build a real *Programmable Visual Keyboard*. A single prototype can be built for $250, the idea is to make it affordable by industrializing it. Kickstarter offers the opportunity to popolarize the idea and crowd fund it. 
-
-While waiting for a breakthrough in haptic technologies that endow mechanical switch like characteristics to a 22" multitouch panel with a 1920x540 resolution (1/2HD), I settle for a standard multitouch panel, mounted on a keyboard sized enclosure, driven by a Raspberry Pi Zero W running in kiosk mode configured as a HID keyboard.
+## The real thing
+This github project is a prof of concept, the aim is to build a real *Programmable Visual Keyboard*. A single prototype can be built for $250, the idea is to make it affordable by industrializing it: while waiting for a breakthrough in haptic technologies that endow mechanical switch like characteristics to a 22" multitouch panel with a 1920x540 resolution (1/2HD), I settle for a standard multitouch panel, mounted on a keyboard sized enclosure, driven by a Raspberry Pi Zero W running in kiosk mode configured as a HID keyboard.
 
 ## Documentation
 - [Universal Serial Bus (USB)](http://www.usb.org/developers/hidpage/Hut1_12v2.pdf) (Page 53, Table 12)
