@@ -26,10 +26,12 @@ Running KeyVision on ${hostname}:${port}
 
 Pick up your mobile phone or tablet, connect to the same WiFi the Zero is connected to, open up a browser and visit http://${hostname}:${port}, a QWERTY US keyboard should appear, touch its keys, the host PC to which the Zero is connected should receive the key clicks.
 
-(If you'd like a preconfigured MicroSD image drop me a note)
+(If you'd like a preconfigured MicroSD image, contact me)
 
 ## The real thing
 This github project is a prof of concept, the aim is to build a real *Programmable Visual Keyboard*. A single prototype can be built for $250, the idea is to make it affordable by industrializing it: while waiting for a breakthrough in haptic technologies that endow mechanical switch like characteristics to a 22" multitouch panel with a 1920x540 resolution (1/2HD), I settle for a standard multitouch panel, mounted on a keyboard sized enclosure, driven by a Raspberry Pi Zero W running in kiosk mode configured as a HID keyboard.
+
+(If you're interested, contact me)
 
 ## Documentation
 - [Universal Serial Bus (USB)](http://www.usb.org/developers/hidpage/Hut1_12v2.pdf) (Page 53, Table 12)
