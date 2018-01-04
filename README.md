@@ -11,7 +11,7 @@ By the way, the name of my one man company is KeyVisions (founded in 1996/01/17)
 In this era of IOT, I decided to revamp the KeyVision project when I came across the [Raspberry Pi Zero W](https://www.raspberrypi.org/products/raspberry-pi-zero-w/) and the fact it can be transformed into an HID keyboard. If you have a spare Respberry Pi Zero W and would like to transform it into a *keyboard as a service device*, do the following:
 
 1. Download and install the latest [Raspbian with desktop image](https://www.raspberrypi.org/downloads/raspbian/) on a MicroSD,
-2. Configure the Zero WiFi, 
+2. Configure the Zero WiFi, see [Setting WiFi up via command line](https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md)
 3. Configure the Zero as an HID keyboard, see  [Composite USB Gadgets on the Raspberry Pi Zero](http://isticktoit.net/?p=1383),
 4. Insert the MicroSD in the Zero and power it up by connecting the USB cable from a host PC to the Zero USB port (not the PWR IN port!),
 5. Connect to the Zero via SSH and install [Node.js](https://nodejs.org/en/download/) (you'll have to remove the preinstalled node.js version),
@@ -36,7 +36,7 @@ This github project represents the virtual side of the KeyVision Project, the ai
 ## Documentation
 - [Universal Serial Bus (USB)](http://www.usb.org/developers/hidpage/Hut1_12v2.pdf) (Page 53, Table 12)
 - [The USB HID protocol](https://docs.mbed.com/docs/ble-hid/en/latest/api/md_doc_HID.html)
-- [Auto WiFi hotspot switch](http://www.raspberryconnect.com/network/item/331-raspberry-pi-auto-wifi-hotspot-switch-no-internet-routing)
+- [Raspberry Pi - Auto WiFi Hotspot Switch - Direct Connection](http://www.raspberryconnect.com/network/item/331-raspberry-pi-auto-wifi-hotspot-switch-no-internet-routing)
 
 ## Acknowledgments
 The Internet, a neverending source of experiences. The open source community, a wonderful group of brains that share their thoughts in hacks and code.
