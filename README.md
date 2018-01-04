@@ -21,6 +21,9 @@ At the prompt, change to the project directory then type:
 
 ```
 $ sudo node keyvision
+```
+the system will respond with
+```
 Running Programmable Visual Keyboard at ${hostname}:${port}
 ```
 
