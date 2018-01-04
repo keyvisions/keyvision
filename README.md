@@ -1,4 +1,4 @@
-# The KeyVision Project (Programmable Visual Keyboard)
+# The KeyVision Project: Programmable Visual Keyboard
 
 ## A bit of history
 Back in the mid 80s I imagined keyboards with a 32x32 LCD display on each key, a new breed of keyboards not limited to be simple input devices but full fledged IO devices: Programmable Visual Keyboards (PVKs). PVKs where meant to provide visual feedback on the system state by changing the mini displays dynamically, by conveying the active font family and style or hosting commands icons, entire palettes, animating keys and naturally portraying any keyboard layout. I designed the PVK electronics and mechanics but the idea remained on paper due to its prohibitive manufacturing cost. Some 10 years later I got in touch with several LCD manufacturers in order to understand if the device had become economically feasible, well, not really, one manufacturer suggested making the whole keyboard a touch screen, my reply was that yes that was an alternative but one of the main objectives of the project was maintaining the keyboard mechanical feel most of us are accustomed to.
