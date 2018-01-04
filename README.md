@@ -21,7 +21,7 @@ At the prompt, change to the project directory then type:
 
 ```
 $ sudo node keyvision
-Running KeyVision on ${hostname}:${port}
+Running Programmable Visual Keyboard at ${hostname}:${port}
 ```
 
 Pick up your mobile phone or tablet, connect to the same WiFi the Zero is connected to, open up a browser and visit http://${hostname}:${port}, a QWERTY US keyboard should appear, touch its keys, the host PC to which the Zero is connected should receive the key clicks and respond accordingly.
