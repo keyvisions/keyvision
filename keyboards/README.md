@@ -1,7 +1,7 @@
 # Keyboards layout
 
 
-
+```
 {
   "version": string, (e.g "1.0")
   "timestamp": datetime, (e.g. )
@@ -17,3 +17,4 @@
     ...
   ]
 }
+```
