@@ -14,7 +14,7 @@ In this era of IOT, I decided to revamp the KeyVision project when I came across
 2. Power up the Zero by connecting the USB cable from a host PC to the Zero USB port (not the PWR IN port!),
 3. Connect to the Zero via SSH
 4. Configure the Zero as an HID keyboard, see  [Composite USB Gadgets on the Raspberry Pi Zero](http://isticktoit.net/?p=1383),
-5. Install [Node.js](https://nodejs.org/en/download/) (you'll have to remove the preinstalled node.js version),
+5. Install [Node.js](https://nodejs.org/en/download/) (you may have to remove the preinstalled node.js version),
 6. Download this project code
 
 At the prompt, change to the project directory then type:
