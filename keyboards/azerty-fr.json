@@ -3,6 +3,7 @@
   "timestamp": null,
   "type": "AWERTY",
   "language": "fr",
+  "error": "Aucune saisie au stylet ou tactile n'est disponible pour cet écran",
   "size": { "rows": 6.25, "cols": 22.5 },
   "keys": [
     { "id": 41, "labels": ["Echap"] },

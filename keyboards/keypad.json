@@ -3,6 +3,7 @@
   "timestamp": null,
   "type": "keypad",
   "language": null,
+  "error": "No Pen or Touch Input is available for this Display",
   "onetouch": true,
   "size": { "rows": 4, "cols": 3 },
   "keys": [

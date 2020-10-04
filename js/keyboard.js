@@ -19,12 +19,18 @@ socket.on("init", layout => {
     repeaterID: 0
   };
 
+  if(window.matchMedia("(pointer: coarse)").matches) {
+    document.body.innerHTML = KBL.error;
+    return;
+  }
+
   renderKeyboard();
 
   document.body.addEventListener("touchstart", touchstart);
   document.body.addEventListener("touchmove", touchcancel);
   document.body.addEventListener("touchend", touchend);
   document.body.addEventListener("touchcancel", touchcancel);
+
   document.body.addEventListener("contextmenu", touchcancel);
 
   window.addEventListener("resize", renderKeyboard);

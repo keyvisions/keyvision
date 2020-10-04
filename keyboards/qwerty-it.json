@@ -3,6 +3,7 @@
   "timestamp": null,
   "type": "QWERTY",
   "language": "it",
+  "error": "Nessun input penna o tocco disponibile per questo display",
   "size": { "rows": 6.25, "cols": 22.5 },
   "keys": [
     { "id": 41, "labels": ["Esc"] },

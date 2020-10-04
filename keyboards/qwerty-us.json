@@ -3,6 +3,7 @@
   "timestamp": null,
   "type": "QWERTY",
   "language": "us",
+  "error": "No Pen or Touch Input is available for this Display",
   "size": { "rows": 6.25, "cols": 22.5 },
   "keys": [
     { "id": 41, "labels": ["Esc"] },
