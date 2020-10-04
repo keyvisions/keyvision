@@ -28,7 +28,7 @@ for (let i = 0; i < args.length; ++i) {
 let app = express();
 app.use(express.static(__dirname));
 
-let server = app.listen(port, hostname, () => console.log(`Running Programmable Visual Keyboard ${hostname}:${port}`));
+let server = app.listen(port, hostname, () => console.log(`Running Programmable Visual Keyboard http://${hostname}:${port}`));
 
 io.listen(server).sockets.on("connection", socket => {
   console.log(`Requested "${layout}" on ${(new Date()).toLocaleString()}`);
