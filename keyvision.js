@@ -36,7 +36,7 @@ io.listen(server).sockets.on("connection", socket => {
   fs.watch(`${__dirname}/.keyvisionrc`, (eventType, filename) => {
     try {
       let cmd = JSON.parse(fs.readFileSync(`${__dirname}/${filename}`).toString());
-      if (cmd.type === "layout") {
+      if (cmd.type === "layout" || cmd.layout) {
         socket.emit("init", fs.readFileSync(`${__dirname}/keyboards/${cmd.layout}.json`).toString());
         layout = cmd.layout;
         console.log(`Requested "${layout}" on ${(new Date()).toLocaleString()}`);
